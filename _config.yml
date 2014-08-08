@@ -1,0 +1,13 @@
+# Jekyll Configuration
+#source: 
+#destination: _site
+baseurl: /rift-mouselook-addon
+
+markdown: kramdown
+
+exclude:
+- build
+- source
+- params.json
+- README.md
+

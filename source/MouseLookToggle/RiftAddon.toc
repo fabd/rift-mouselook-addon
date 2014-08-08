@@ -1,0 +1,19 @@
+Identifier = "MouselookToggle"
+
+Name = "Mouse Look Toggle"
+
+Description = "Adds mouse look toggle, interract key and additional mouse hotkeys for fluid movement and combat."
+
+Author = "github.com/fabd"
+
+Website = "http://github.com/fabd"
+
+Version = "1.0"
+
+Email = "not_a_valid_email@nowhere.com"
+
+Environment = "2.7"
+
+RunOnStartup = {
+  "Main.lua"
+}

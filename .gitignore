@@ -1,0 +1,14 @@
+!.gitignore
+
+_todo.txt
+
+# Scripts specific to my setup, and release package
+/build/*.sh
+/build/*.zip
+
+/source/_*
+
+/web/*.zip
+
+# Jekyll generated site
+/_site

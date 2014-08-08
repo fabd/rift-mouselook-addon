@@ -8,7 +8,5 @@ _todo.txt
 
 /source/_*
 
-/web/*.zip
-
 # Jekyll generated site
 /_site

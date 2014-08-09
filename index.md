@@ -133,17 +133,11 @@ provides similar functionality for Guild Wars 2.
 
 **Is it safe to use Autohotkey?**
 
-[RIFT Terms of Use](http://www.trionworlds.com/en/legal/terms-of-use/) state that it is not allowed to use
- *"cheats, automation software (bots), hacks, modifications (mods) or any other unauthorized third-party software
- designed to modify the Game experience"*. The included Autohotkey script is neither of these as it simply provides additional means to bind mouse buttons.
+While Autohotkey has [many legitimate uses](http://lifehacker.com/5598693/the-best-time-saving-autohotkey-tricks-you-should-be-using) it is also being used to create "bots" in various games, including Rift. A "fishing bot" script apparently made the rounds a couple years ago and it appears that Trion World implemented rather crude detection of the Autohotkey as a result.
 
-Autohotkey is not designed for cheating and has [many legitimate uses](http://lifehacker.com/5598693/the-best-time-saving-autohotkey-tricks-you-should-be-using) outside of gaming. Unfortunately it is also notorious for being used to create "bots" in various games, including Rift. A "fishing bot" script
-apparently made the rounds a couple years ago and it appears that Trion World implemented rather crude detection of the Autohotkey as a result (see eg. [this forum post](http://forums.riftgame.com/general-discussions/general-discussion/347792-thanks-banning-legit-players.html)).
+[Quoting January 9th 2013 Patch Notes:](http://forums.riftgame.com/general-discussions/patch-notes/347356-rift-2-1-hotfix-2-8-00am-pst-1-9-13-na-2-00am-gmt-10-1-13-eu.html) "That said, some folks do innocently use keyboard-assistance software while they’re at their computer." (...) "for the next week or two, until the bot situation gets back under control, use of this software may intentionally be randomly unreliable, up to causing random disconnects."
 
-Fortunately judging by the number of recent reports on the forums the "cheat detection" seem to have been improved and using this script is unlikely to cause issues. However I can give no guarantee. **If you'd rather avoid wasting time with customer service** you can compile the script. Simply look for the `ahk2exe`program in your Autohotkey installation folder, it is very easy to use. This will create a new, completely standalone executable that can be run without Autohotkey.
+**This was in January 2013**. A Google search of Autohotkey on the Rift forums doesn't show up any recent posts relating to bans for legitimate uses of Autohotkey. Obviously if pressed, the developers and customer service are going to say something along the lines that "use of unauthorized third-party software is not allowed".
 
+If you are still worried about using Autohotkey you can compile the script. Simply look for the `ahk2exe`program in your Autohotkey installation folder, it is very easy to use. This will create a new, completely standalone executable that can be run without Autohotkey.
 
-### Oh, hi!
-
-Hello, I'm Fabrice. I also created the mods [Better Dialogue Controls](www.nexusmods.com/skyrim/mods/27371) and
-[Better MessageBox Controls](http://www.nexusmods.com/skyrim/mods/28170) for Skyrim.

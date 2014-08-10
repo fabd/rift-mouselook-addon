@@ -1,3 +1,7 @@
+---
+download_counter_url: http://dstats.net/download/
+download_domain_url: http://fabd.github.io
+---
 <!DOCTYPE html>
 <html>
 
@@ -23,7 +27,7 @@
           <h2 id="project_tagline">Mouse Look Toggle Script and Addon for <strong>Rift MMO</strong>.</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="{{ site.baseurl }}/web/Rift-MouseLookToggle.zip">Download this project as a .zip file</a>
+              <a class="zip_download_link" href="{{page.download_counter_url}}{{page.download_domain_url}}{{ site.baseurl }}/web/Rift-MouseLookToggle.zip">Download this project as a .zip file</a>
             </section>
         </header>
     </div>
@@ -38,7 +42,17 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Rift-mouselooktoggle maintained by <a href="https://github.com/fabd">fabd</a></p>
+
+<!-- simple download counter -->
+<script type="text/javascript" src="http://dstats.net/dstatsjs.php?file={{page.download_domain_url}}{{ site.baseurl }}/web/Rift-MouseLookToggle.zip"></script>
+
+
+        <p class="copyright">Rift-mouselooktoggle maintained by <a href="https://github.com/fabd">fabd</a>
+        <span class="download-counter">Downloaded <script type="text/javascript">document.write(dsCounter);</script> times
+        (<a href="http://dstats.net/show/{{page.download_domain_url}}{{ site.baseurl }}/web/Rift-MouseLookToggle.zip">Dstats.net</a>)</span></p>
+
+
+
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>  

@@ -437,5 +437,6 @@ Moar Styles
 *******************************************************************************/
 span.note { font-size:80%; line-height:1.4em; display:block; }
 
-
+span.download-counter { color:#888; margin-left:1em; }
+span.download-counter a { text-decoration: none; color:#aaa; }
 

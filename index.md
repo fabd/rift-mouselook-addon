@@ -49,7 +49,7 @@ Additional keys triggered by mouse buttons (set these in game to your Action Bar
 1. Download the archive and extract into the Rift Addons folder. There should be a "MouseLookToggle" folder
   alongside your other Addons.
 
-2. [Download and install Autohotkey](http://www.autohotkey.com/).
+2. [Download and install Autohotkey](http://ahkscript.org/) (from *ahkscript.org*, newer version).
 
 3. Double click the `MouseLookToggle.ahk` file to run the Autohotkey script. <span class="note">A little "H" icon should show
   up in the tray bar. The Autohotkey script will only work within the active Rift game window. If you exit

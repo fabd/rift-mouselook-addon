@@ -38,15 +38,15 @@ iTimerBefore     := 0
 
 Menu, Tray, Add, GO TO ADDON WEBSITE, CheckForUpdates
 
-Hotkey,IfWinActive,ahk_class TWNClientFramework
-Hotkey,%Toggle_key%,ToggleMouseLook, UseErrorLevel 2
-Hotkey,%Interract_Key%,InterractKey, UseErrorLevel 2
+Hotkey, IfWinActive, ahk_class TWNClientFramework
+Hotkey, %Toggle_key%, ToggleMouseLook, UseErrorLevel 2
+Hotkey, %Interract_Key%, InterractKey, UseErrorLevel 2
 
 ; ~ allows the hotkey to fire without blocking the original keypress
-Hotkey,~%Escape_Key%,EscapeKey, UseErrorLevel 2
+Hotkey, ~%Escape_Key%, EscapeKey, UseErrorLevel 2
 
 ; This improves Interract Key handling a little bit
-SendMode Input
+SendMode, Input
 
 ; Log file helps debugging
 if (Debugging && FileExist(debug_log))
@@ -55,7 +55,7 @@ if (Debugging && FileExist(debug_log))
 ; Poll at regular intervals for a single pixel in a corner of the screen (set by the Addon)
 ; which cues us that a Rift UI is open that may require mouse/keyboard input, and thus we
 ; should turn off Mouse Look.
-SetTimer,PollForRiftUi,100
+SetTimer, PollForRiftUi, 100
 
 Return
 
@@ -66,7 +66,7 @@ if (RiftUiIsOpen() || ChatIsOpen())
 {
 	; whether we use TAB or another key for mouse look toggle, we want it to work in chat
 	; as well as in Rift UI which use input fields (such as the Auction house "Search")
-	Send {%Toggle_key%}
+	Send, {%Toggle_key%}
 	return
 }
 
@@ -76,7 +76,7 @@ else
 {
 	MouseLook := True
 	DllCall("SetCursorPos", int, (A_ScreenWidth/2-4) , int, (A_ScreenHeight/2))
-	Send {RButton down}
+	Send, {RButton down}
 	Sleep, 100
 }
 return
@@ -93,7 +93,7 @@ if MouseLook
 If (RiftUiIsOpen() || ChatIsOpen())
 {
 	; if chat or other Rift UI with text input is active, send the key as is
-	Send {%Interract_Key%}
+	Send, {%Interract_Key%}
 	Return
 }
 
@@ -147,20 +147,20 @@ Return
 #If WinActive("ahk_class TWNClientFramework") && MouseLook
 
 ; Map the LMB to Action Bar while Mouse Look is active
-$LButton::Send {%Left_Click_Key%}
+$LButton::Send, {%Left_Click_Key%}
 
 ; Map Shift + LMB to Action Bar while Mouse Look is active
-$+LButton::Send {%Shift_Left_Click_Key%}
+$+LButton::Send, {%Shift_Left_Click_Key%}
 
 ; Map RMB to something while Mouse Look is active
-$RButton::Send {%Right_Click_Key%}
+$RButton::Send, {%Right_Click_Key%}
 
 ; Map Shift + RMB to something while Mouse Look is active
-$+RButton::Send {%Shift_Right_Click_Key%}
+$+RButton::Send, {%Shift_Right_Click_Key%}
 
 ; Alt key binds
-;$!LButton::Send {%Alt_Left_Click_Key%}
-;$!RButton::Send {%Alt_Right_Click_Key%}
+;$!LButton::Send, {%Alt_Left_Click_Key%}
+;$!RButton::Send, {%Alt_Right_Click_Key%}
 
 $WheelUp::Send, {%Mouse_Wheel_Up%}
 $WheelDown::Send, {%Mouse_Wheel_Down%}
@@ -170,7 +170,7 @@ ReleaseMlook()
 	global mouselook
 	if MouseLook
 	{
-		;SoundBeep,,50
+		;SoundBeep,, 50
 		MouseLook := False
 		Send, {RButton UP}
 	}
@@ -187,7 +187,7 @@ Return
 ; Check pixel set by Rift Addon that tells us if a Rift UI needs keyboard input.
 RiftUiIsOpen()
 {
-	return PixelColorSimple(0,0) == 0xff0000
+	return PixelColorSimple(0, 0) == 0xff0000
 }
 
 ; Check whether Rift Chat Window currently has the keyboard focus.
@@ -240,7 +240,7 @@ ChatIsOpen()
 	if (ItsOpen && !saved_chat)
 	{
 		saved_chat := True, s_chat_x := chat_x, s_chat_y := chat_y
-		;SoundBeep,,50
+		;SoundBeep,, 50
 	}
 	
 	;TimerEnd("ChatIsOpen()")
@@ -282,7 +282,7 @@ GetGameWindowId()
 		gameWindowId := WinExist("ahk_class TWNClientFramework")
 		if !gameWindowId
 		{
-			MsgBox "GetGameWindowId() could not find game window."
+			MsgBox, "GetGameWindowId() could not find game window."
 			exit
 		}
 	}

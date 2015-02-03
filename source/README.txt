@@ -7,7 +7,8 @@ Website:
 
 How to Install:
 
-  - Download and install Autohotkey from http://www.autohotkey.com/
+  - Download and install Autohotkey from http://ahkscript.org/
+    (IMPORTANT! AutoHotkey.com gives a really old version that won't work)
 
   - Extract contents of this archive to your RIFT Addons folder
   

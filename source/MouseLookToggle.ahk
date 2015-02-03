@@ -302,15 +302,10 @@ PixelColorSimple(x, y)
 {
 	hWnd := GetGameWindowID()
 	
-	hDC := DllCall("GetDC", "UInt", hWnd)
-	FmtI := A_FormatInteger
-	SetFormat, IntegerFast, Hex
-	c := DllCall("GetPixel", "UInt", hDC, "Int", x, "Int", y, "UInt")
-	c := c >> 16 & 0xff | c & 0xff00 | (c & 0xff) << 16
-	c .= ""
-	SetFormat, IntegerFast, %FmtI%
-	DllCall("ReleaseDC", "UInt", hWnd, "UInt", hDC)
-	return c
+	hDC := DllCall("GetDC", "UPtr", hWnd, "UPtr")
+	c := DllCall("GetPixel", "UPtr", hDC, "Int", x, "Int", y, "UInt")
+	DllCall("ReleaseDC", "UPtr", hWnd, "UPtr", hDC)
+	return c >> 16 & 0xff | c & 0xff00 | (c & 0xff) << 16
 }
 
 CheckForUpdates:

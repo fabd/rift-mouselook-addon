@@ -114,6 +114,46 @@ if (mouselook == 1)
 Send {%Escape_Key%}
 Return
 
+; Release the Right Mouse Button when switching focus away from the game window
+~!TAB::
+~^!DEL::
+ReleaseMlook()  
+Return
+~LWin::
+ReleaseMlook()  
+Send, {LWin}
+Return
+~RWin::
+ReleaseMlook()  
+Send, {RWin}
+Return
+
+; Global On/Off toggle for the script
+f12::
+Suspend 
+ReleaseMlook()
+Return
+
+; Control Shift Left Mouse Button to debug the script (this block can safely be removed from the script)
+$^+LButton::
+if (debugging == 1)
+{
+	pix1rgb  := PixelColorSimple(1, 0)
+	pix2rgb  := PixelColorSimple(2, 0)
+	chat_x := ((pix1rgb & 0xFF00) >> 8) * 100 + (pix1rgb & 0xFF)
+	chat_y := ((pix2rgb & 0xFF00) >> 8) * 100 + (pix2rgb & 0xFF)
+	; MsgBox Coords received from Rift : %chat_x%, %chat_y%
+	ToolTip, % "Coords received from Rift: " chat_x ", " chat_y
+	SetTimer, RemoveToolTip, 5000
+}
+Return
+RemoveToolTip:
+SetTimer, RemoveToolTip, Off
+ToolTip
+Return
+
+#If WinActive("ahk_class TWNClientFramework") && MouseLook
+
 ; Map the LMB to Action Bar while Mouse Look is active
 $LButton::
 if (mouselook == 1)
@@ -194,44 +234,6 @@ If (mouselook == 1)
 	Return
 }
 Send, {WheelDown}
-Return
-
-; Release the Right Mouse Button when switching focus away from the game window
-~!TAB::
-~^!DEL::
-ReleaseMlook()  
-Return
-~LWin::
-ReleaseMlook()  
-Send, {LWin}
-Return
-~RWin::
-ReleaseMlook()  
-Send, {RWin}
-Return
-
-; Global On/Off toggle for the script
-f12::
-Suspend 
-ReleaseMlook()
-Return
-
-; Control Shift Left Mouse Button to debug the script (this block can safely be removed from the script)
-$^+LButton::
-if (debugging == 1)
-{
-	pix1rgb  := PixelColorSimple(1, 0)
-	pix2rgb  := PixelColorSimple(2, 0)
-	chat_x := ((pix1rgb & 0xFF00) >> 8) * 100 + (pix1rgb & 0xFF)
-	chat_y := ((pix2rgb & 0xFF00) >> 8) * 100 + (pix2rgb & 0xFF)
-	; MsgBox Coords received from Rift : %chat_x%, %chat_y%
-	ToolTip, % "Coords received from Rift: " chat_x ", " chat_y
-	SetTimer, RemoveToolTip, 5000
-}
-Return
-RemoveToolTip:
-SetTimer, RemoveToolTip, Off
-ToolTip
 Return
 
 ReleaseMlook()

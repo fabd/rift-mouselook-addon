@@ -65,7 +65,7 @@ Return
 #IfWinActive ahk_class TWNClientFramework
 
 ToggleMouseLook:
-if (RiftUiIsOpen() or ChatIsOpen())
+if (RiftUiIsOpen() || ChatIsOpen())
 {
 	; whether we use TAB or another key for mouse look toggle, we want it to work in chat
 	; as well as in Rift UI which use input fields (such as the Auction house "Search")
@@ -94,7 +94,7 @@ if MouseLook
 	Sleep, 100 ; wait a bit otherwise camera may turn to a nearby target
 }
 
-If (RiftUiIsOpen() or ChatIsOpen())
+If (RiftUiIsOpen() || ChatIsOpen())
 {
 	; if chat or other Rift UI with text input is active, send the key as is
 	Send {%Interract_Key%}

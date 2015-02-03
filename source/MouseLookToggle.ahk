@@ -47,13 +47,8 @@ Hotkey,%Escape_Key%,EscapeKey, UseErrorLevel 2
 SendMode Input
 
 ; Log file helps debugging
-if Debugging
-{
-	If FileExist(debug_log)
-	{
-		FileDelete, %debug_log%
-	}
-}
+if (Debugging && FileExist(debug_log))
+	FileDelete, %debug_log%
 
 ; Poll at regular intervals for a single pixel in a corner of the screen (set by the Addon)
 ; which cues us that a Rift UI is open that may require mouse/keyboard input, and thus we

@@ -41,7 +41,9 @@ Menu, Tray, Add, GO TO ADDON WEBSITE, CheckForUpdates
 Hotkey,IfWinActive,ahk_class TWNClientFramework
 Hotkey,%Toggle_key%,ToggleMouseLook, UseErrorLevel 2
 Hotkey,%Interract_Key%,InterractKey, UseErrorLevel 2
-Hotkey,%Escape_Key%,EscapeKey, UseErrorLevel 2
+
+; ~ allows the hotkey to fire without blocking the original keypress
+Hotkey,~%Escape_Key%,EscapeKey, UseErrorLevel 2
 
 ; This improves Interract Key handling a little bit
 SendMode Input
@@ -101,11 +103,7 @@ Return
 ; The Escape also toggles off Mouse Look. This is partly for user-friendliness, and partly
 ; because it solves not being able to detect the main menu (the Escape menu) in the Addon.
 EscapeKey:
-if MouseLook
-{
-	ReleaseMlook()
-}
-Send {%Escape_Key%}
+ReleaseMlook()
 Return
 
 ; Release the Right Mouse Button when switching focus away from the game window

@@ -28,11 +28,11 @@ Mouse_Wheel_Up         = Numpad8
 Mouse_Wheel_Down       = Numpad5
 
 ; Enable/disable debugging
-debugging        := 0
+debugging        := False
 debug_log        := A_Desktop . "\MouseLookToggle_log.txt"
 
 ; Misc initialization (don't change these)
-mouselook        := 0
+mouselook        := False
 gameWindowId     := 0
 iTimerBefore     := 0
 
@@ -47,7 +47,7 @@ Hotkey,%Escape_Key%,EscapeKey, UseErrorLevel 2
 SendMode Input
 
 ; Log file helps debugging
-if (debugging == 1)
+if Debugging
 {
 	If FileExist(debug_log)
 	{
@@ -73,9 +73,9 @@ if (RiftUiIsOpen() or ChatIsOpen())
 	Return
 }
 
-if (mouselook == 0)
+if !MouseLook
 {
-	mouselook := 1
+	MouseLook := True
 	DllCall("SetCursorPos", int, (A_ScreenWidth/2-4) , int, (A_ScreenHeight/2))
 	Send {RButton down}
 	Sleep, 100
@@ -88,7 +88,7 @@ return
 ; The Interract hotkey sends a right click in the middle of the view. This allows the user
 ; to interract with NPCs, harvest nodes, etc without having to toggle off Mouse Look first.
 InterractKey:
-if (mouselook == 1)
+if MouseLook
 {
 	ReleaseMlook()
 	Sleep, 100 ; wait a bit otherwise camera may turn to a nearby target
@@ -107,7 +107,7 @@ Return
 ; The Escape also toggles off Mouse Look. This is partly for user-friendliness, and partly
 ; because it solves not being able to detect the main menu (the Escape menu) in the Addon.
 EscapeKey:
-if (mouselook == 1)
+if MouseLook
 {
 	ReleaseMlook()
 }
@@ -136,7 +136,7 @@ Return
 
 ; Control Shift Left Mouse Button to debug the script (this block can safely be removed from the script)
 $^+LButton::
-if (debugging == 1)
+if Debugging
 {
 	pix1rgb  := PixelColorSimple(1, 0)
 	pix2rgb  := PixelColorSimple(2, 0)
@@ -176,17 +176,17 @@ $WheelDown::Send, {%Mouse_Wheel_Down%}
 ReleaseMlook()
 {
 	global mouselook
-	if (mouselook == 1)
+	if MouseLook
 	{
 		;SoundBeep,,50
-		mouselook := 0
+		MouseLook := False
 		Send, {RButton UP}
 	}
 }
 
 ; Check if a Rift UI Window is open and if so, release Mouse Look.
 PollForRiftUi:
-if (mouselook == 1 and RiftUiIsOpen())
+if (MouseLook && RiftUiIsOpen())
 {
 	ReleaseMlook()
 }
@@ -195,14 +195,13 @@ Return
 ; Check pixel set by Rift Addon that tells us if a Rift UI needs keyboard input.
 RiftUiIsOpen()
 {
-	ItsOpen := (PixelColorSimple(0,0) == 0xff0000)
-	return ItsOpen
+	return PixelColorSimple(0,0) == 0xff0000
 }
 
 ; Check whether Rift Chat Window currently has the keyboard focus.
 ChatIsOpen()
 {
-	static saved_chat := 0, s_chat_x, s_chat_y
+	static saved_chat := False, s_chat_x, s_chat_y
 	local  chat_x, chat_y
 	
 	;TimerStart()
@@ -248,7 +247,7 @@ ChatIsOpen()
 	
 	if (ItsOpen && !saved_chat)
 	{
-		saved_chat := 1, s_chat_x := chat_x, s_chat_y := chat_y
+		saved_chat := True, s_chat_x := chat_x, s_chat_y := chat_y
 		;SoundBeep,,50
 	}
 	
@@ -260,9 +259,8 @@ ChatIsOpen()
 TimerStart()
 {
 	global debugging, iTimerBefore
-	if (debugging == 0) {
+	if !debugging
 		Return
-	}
 	iTimerBefore := A_TickCount
 }
 
@@ -271,9 +269,8 @@ TimerEnd(msg)
 	global debugging, debug_log, iTimerBefore
 	static iTimerSamples = 0, iTimerTotal = 0
 	
-	if (debugging == 0) {
+	if !debugging
 		Return
-	}
 	
 	iTimerElapsed := A_TickCount - iTimerBefore
 	iTimerTotal   += iTimerElapsed
@@ -288,10 +285,10 @@ TimerEnd(msg)
 GetGameWindowId()
 {
 	static gameWindowId = 0
-	if (gameWindowId == 0)
+	if !gameWindowId
 	{
 		gameWindowId := WinExist("ahk_class TWNClientFramework")
-		if (gameWindowId == 0)
+		if !gameWindowId
 		{
 			MsgBox "GetGameWindowId() could not find game window."
 			exit

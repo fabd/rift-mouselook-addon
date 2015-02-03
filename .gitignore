@@ -7,6 +7,7 @@ _todo.txt
 /build/*.zip
 
 /source/_*
+/source/backup
 
 # Jekyll generated site
 /_site

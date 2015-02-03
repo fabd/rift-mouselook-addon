@@ -117,20 +117,20 @@ Return
 ; Release the Right Mouse Button when switching focus away from the game window
 ~!TAB::
 ~^!DEL::
-ReleaseMlook()  
+ReleaseMlook()
 Return
 ~LWin::
-ReleaseMlook()  
+ReleaseMlook()
 Send, {LWin}
 Return
 ~RWin::
-ReleaseMlook()  
+ReleaseMlook()
 Send, {RWin}
 Return
 
 ; Global On/Off toggle for the script
 f12::
-Suspend 
+Suspend
 ReleaseMlook()
 Return
 
@@ -223,7 +223,7 @@ ChatIsOpen()
 		chat_x := ((pix1rgb & 0xFF00) >> 8) * 100 + (pix1rgb & 0xFF)
 		chat_y := ((pix2rgb & 0xFF00) >> 8) * 100 + (pix2rgb & 0xFF)
 		
-		; If chat coordinates can't be received from the Rift Addon for whatever reason, 
+		; If chat coordinates can't be received from the Rift Addon for whatever reason,
 		; type /mouselooktoggle ingame to get the coordinates and edit them below. As long as the
 		; chat window is not moved, it will continue to work. If switching between characters
 		; you may want to use /exportui and /importui to make sure the chat window coordinates

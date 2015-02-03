@@ -6,7 +6,7 @@
 ; http://fabd.github.io/rift-mouselook-addon/
 ;
 #NoEnv
-#SingleInstance force
+#SingleInstance Force
 
 ; Mouse Look Toggle key (default: Tab)
 Toggle_key             = Tab
@@ -28,12 +28,12 @@ Mouse_Wheel_Up         = Numpad8
 Mouse_Wheel_Down       = Numpad5
 
 ; Enable/disable debugging
-debugging        := False
-debug_log        := A_Desktop . "\MouseLookToggle_log.txt"
+Debugging        := False
+DebugLog         := A_Desktop . "\MouseLookToggle_log.txt"
 
 ; Misc initialization (don't change these)
-mouselook        := False
-gameWindowId     := 0
+MouseLook        := False
+GameWindowID     := 0
 iTimerBefore     := 0
 
 Menu, Tray, Add, GO TO ADDON WEBSITE, CheckForUpdates
@@ -49,15 +49,15 @@ Hotkey, ~%Escape_Key%, EscapeKey, UseErrorLevel 2
 SendMode, Input
 
 ; Log file helps debugging
-if (Debugging && FileExist(debug_log))
-	FileDelete, %debug_log%
+if (Debugging && FileExist(DebugLog))
+	FileDelete, %DebugLog%
 
 ; Poll at regular intervals for a single pixel in a corner of the screen (set by the Addon)
 ; which cues us that a Rift UI is open that may require mouse/keyboard input, and thus we
 ; should turn off Mouse Look.
 SetTimer, PollForRiftUi, 100
 
-Return
+return
 
 #IfWinActive ahk_class TWNClientFramework
 
@@ -76,7 +76,7 @@ else
 {
 	MouseLook := True
 	DllCall("SetCursorPos", int, (A_ScreenWidth/2-4) , int, (A_ScreenHeight/2))
-	Send, {RButton down}
+	Send, {RButton Down}
 	Sleep, 100
 }
 return
@@ -90,59 +90,59 @@ if MouseLook
 	Sleep, 100 ; wait a bit otherwise camera may turn to a nearby target
 }
 
-If (RiftUiIsOpen() || ChatIsOpen())
+if (RiftUiIsOpen() || ChatIsOpen())
 {
 	; if chat or other Rift UI with text input is active, send the key as is
 	Send, {%Interract_Key%}
-	Return
+	return
 }
 
-Click right
-Return
+Click Right
+return
 
 ; The Escape also toggles off Mouse Look. This is partly for user-friendliness, and partly
 ; because it solves not being able to detect the main menu (the Escape menu) in the Addon.
 EscapeKey:
 ReleaseMlook()
-Return
+return
 
 ; Release the Right Mouse Button when switching focus away from the game window
 ~!TAB::
 ~^!DEL::
 ReleaseMlook()
-Return
+return
 ~LWin::
 ReleaseMlook()
 Send, {LWin}
-Return
+return
 ~RWin::
 ReleaseMlook()
 Send, {RWin}
-Return
+return
 
 ; Global On/Off toggle for the script
 f12::
 Suspend
 ReleaseMlook()
-Return
+return
 
 ; Control Shift Left Mouse Button to debug the script (this block can safely be removed from the script)
 $^+LButton::
 if Debugging
 {
-	pix1rgb  := PixelColorSimple(1, 0)
-	pix2rgb  := PixelColorSimple(2, 0)
-	chat_x := ((pix1rgb & 0xFF00) >> 8) * 100 + (pix1rgb & 0xFF)
-	chat_y := ((pix2rgb & 0xFF00) >> 8) * 100 + (pix2rgb & 0xFF)
-	; MsgBox Coords received from Rift : %chat_x%, %chat_y%
-	ToolTip, % "Coords received from Rift: " chat_x ", " chat_y
+	Pix1RGB := PixelColorSimple(1, 0)
+	Pix2RGB  := PixelColorSimple(2, 0)
+	ChatX := ((Pix1RGB & 0xFF00) >> 8) * 100 + (Pix1RGB & 0xFF)
+	ChatY := ((Pix2RGB & 0xFF00) >> 8) * 100 + (Pix2RGB & 0xFF)
+	; MsgBox Coords received from Rift: %ChatX%, %ChatY%
+	ToolTip, % "Coords received from Rift: " ChatX ", " ChatY
 	SetTimer, RemoveToolTip, 5000
 }
-Return
+return
 RemoveToolTip:
 SetTimer, RemoveToolTip, Off
 ToolTip
-Return
+return
 
 #If WinActive("ahk_class TWNClientFramework") && MouseLook
 
@@ -182,7 +182,7 @@ if (MouseLook && RiftUiIsOpen())
 {
 	ReleaseMlook()
 }
-Return
+return
 
 ; Check pixel set by Rift Addon that tells us if a Rift UI needs keyboard input.
 RiftUiIsOpen()
@@ -193,8 +193,8 @@ RiftUiIsOpen()
 ; Check whether Rift Chat Window currently has the keyboard focus.
 ChatIsOpen()
 {
-	static saved_chat := False, s_chat_x, s_chat_y
-	local  chat_x, chat_y
+	static SavedChat := False, SavedChatX, SavedChatY
+	local  ChatX, ChatY
 	
 	;TimerStart()
 	
@@ -204,16 +204,16 @@ ChatIsOpen()
 	; hopefully this pixel check works reliably for all users. It will need updating if
 	; the chat window graphics are updated.
 	
-	if (!saved_chat)
+	if (!SavedChat)
 	{
 		; In order to make the script adapt to the user's UI, instead of using fixed coordinates
 		; we receive them from the in game Addon. The Addon encodes coordinates of the chat window
 		; in a few pixels' RGB values. ... o_O
 		
-		local pix1rgb  := PixelColorSimple(1, 0)
-		local pix2rgb  := PixelColorSimple(2, 0)
-		chat_x := ((pix1rgb & 0xFF00) >> 8) * 100 + (pix1rgb & 0xFF)
-		chat_y := ((pix2rgb & 0xFF00) >> 8) * 100 + (pix2rgb & 0xFF)
+		local Pix1RGB := PixelColorSimple(1, 0)
+		local Pix2RGB := PixelColorSimple(2, 0)
+		ChatX := ((Pix1RGB & 0xFF00) >> 8) * 100 + (Pix1RGB & 0xFF)
+		ChatY := ((Pix2RGB & 0xFF00) >> 8) * 100 + (Pix2RGB & 0xFF)
 		
 		; If chat coordinates can't be received from the Rift Addon for whatever reason,
 		; type /mouselooktoggle ingame to get the coordinates and edit them below. As long as the
@@ -221,8 +221,8 @@ ChatIsOpen()
 		; you may want to use /exportui and /importui to make sure the chat window coordinates
 		; are identical between characters.
 		;
-		;chat_x := 57
-		;chat_y := 1372
+		;ChatX := 57
+		;ChatY := 1372
 	}
 	else
 	{
@@ -230,16 +230,19 @@ ChatIsOpen()
 		; removes the occasional glitches where shaders or weather effects affect the pixels
 		; and the chat is not properly detected (ie. snow in Iron Pine Peaks).
 		
-		chat_x := s_chat_x, chat_y := s_chat_y
+		ChatX := SavedChatX
+		ChatY := SavedChatY
 	}
 	
-	ItsOpen := (PixelColorSimple(chat_x, chat_y) == 0x3b3a3b)
-	&& (PixelColorSimple(chat_x+2, chat_y) == 0x3b3a3b)
-	&& (PixelColorSimple(chat_x+4, chat_y) == 0x3b3a3b)
+	ItsOpen := (PixelColorSimple(ChatX, ChatY) == 0x3b3a3b)
+	&& (PixelColorSimple(ChatX+2, ChatY) == 0x3b3a3b)
+	&& (PixelColorSimple(ChatX+4, ChatY) == 0x3b3a3b)
 	
 	if (ItsOpen && !saved_chat)
 	{
-		saved_chat := True, s_chat_x := chat_x, s_chat_y := chat_y
+		SavedChat := True
+		SavedChatX := ChatX
+		SavedChatY := ChatY
 		;SoundBeep,, 50
 	}
 	
@@ -250,19 +253,19 @@ ChatIsOpen()
 
 TimerStart()
 {
-	global debugging, iTimerBefore
-	if !debugging
-		Return
+	global Debugging, iTimerBefore
+	if !Debugging
+		return
 	iTimerBefore := A_TickCount
 }
 
 TimerEnd(msg)
 {
-	global debugging, debug_log, iTimerBefore
+	global Debugging, DebugLog, iTimerBefore
 	static iTimerSamples = 0, iTimerTotal = 0
 	
-	if !debugging
-		Return
+	if !Debugging
+		return
 	
 	iTimerElapsed := A_TickCount - iTimerBefore
 	iTimerTotal   += iTimerElapsed
@@ -270,23 +273,23 @@ TimerEnd(msg)
 	iTimerAverage := Floor(iTimerTotal / iTimerSamples)
 	
 	s := msg . " " . iTimerElapsed . "ms (" . iTimerAverage . "ms avg)"
-	FileAppend, %s%`n, %debug_log%
+	FileAppend, %s%`n, %DebugLog%
 }
 
 ; Return unique ID of the game window.
-GetGameWindowId()
+GetGameWindowID()
 {
-	static gameWindowId = 0
-	if !gameWindowId
+	static GameWindowID := 0
+	if !GameWindowID
 	{
-		gameWindowId := WinExist("ahk_class TWNClientFramework")
-		if !gameWindowId
+		GameWindowID := WinExist("ahk_class TWNClientFramework")
+		if !GameWindowID
 		{
-			MsgBox, "GetGameWindowId() could not find game window."
+			MsgBox, "GetGameWindowID() could not find game window."
 			exit
 		}
 	}
-	return gameWindowId
+	return GameWindowID
 }
 
 ; This is MUCH faster than PixelGetColor() because it works on the game window rather
@@ -295,21 +298,21 @@ GetGameWindowId()
 ;
 ; Source: http://www.autohotkey.com/board/topic/38414-pixelcolorx-y-window-transp-off-screen-etc-windows/#entry242401
 ;
-PixelColorSimple(pc_x, pc_y)
+PixelColorSimple(x, y)
 {
-	pc_wID := GetGameWindowId()
+	hWnd := GetGameWindowID()
 	
-	pc_hDC := DllCall("GetDC", "UInt", pc_wID)
-	pc_fmtI := A_FormatInteger
+	hDC := DllCall("GetDC", "UInt", hWnd)
+	FmtI := A_FormatInteger
 	SetFormat, IntegerFast, Hex
-	pc_c := DllCall("GetPixel", "UInt", pc_hDC, "Int", pc_x, "Int", pc_y, "UInt")
-	pc_c := pc_c >> 16 & 0xff | pc_c & 0xff00 | (pc_c & 0xff) << 16
-	pc_c .= ""
-	SetFormat, IntegerFast, %pc_fmtI%
-	DllCall("ReleaseDC", "UInt", pc_wID, "UInt", pc_hDC)
-	return pc_c
+	c := DllCall("GetPixel", "UInt", hDC, "Int", x, "Int", y, "UInt")
+	c := c >> 16 & 0xff | c & 0xff00 | (c & 0xff) << 16
+	c .= ""
+	SetFormat, IntegerFast, %FmtI%
+	DllCall("ReleaseDC", "UInt", hWnd, "UInt", hDC)
+	return c
 }
 
 CheckForUpdates:
 Run, http://fabd.github.io/rift-mouselook-addon/
-Return
+return

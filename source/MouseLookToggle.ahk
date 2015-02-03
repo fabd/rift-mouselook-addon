@@ -70,19 +70,18 @@ if (RiftUiIsOpen() || ChatIsOpen())
 	; whether we use TAB or another key for mouse look toggle, we want it to work in chat
 	; as well as in Rift UI which use input fields (such as the Auction house "Search")
 	Send {%Toggle_key%}
-	Return
+	return
 }
 
-if !MouseLook
+if MouseLook
+	ReleaseMlook()
+else
 {
 	MouseLook := True
 	DllCall("SetCursorPos", int, (A_ScreenWidth/2-4) , int, (A_ScreenHeight/2))
 	Send {RButton down}
 	Sleep, 100
-	Return
 }
-
-ReleaseMlook()
 return
 
 ; The Interract hotkey sends a right click in the middle of the view. This allows the user

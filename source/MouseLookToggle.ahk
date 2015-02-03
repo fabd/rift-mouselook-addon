@@ -155,86 +155,23 @@ Return
 #If WinActive("ahk_class TWNClientFramework") && MouseLook
 
 ; Map the LMB to Action Bar while Mouse Look is active
-$LButton::
-if (mouselook == 1)
-{
-	Send {%Left_Click_Key%}
-	Return
-}
-Click down left
-KeyWait, LButton
-Click up left
-Return
+$LButton::Send {%Left_Click_Key%}
 
 ; Map Shift + LMB to Action Bar while Mouse Look is active
-$+LButton::
-if (mouselook == 1)
-{
-	Send {%Shift_Left_Click_Key%}
-	Return
-}
-Click down left
-KeyWait, LButton
-Click up left
-Return
+$+LButton::Send {%Shift_Left_Click_Key%}
 
 ; Map RMB to something while Mouse Look is active
-$RButton::
-if (mouselook == 1)
-{
-	Send {%Right_Click_Key%}
-	Return
-}
-Click down right
-KeyWait, RButton
-Click up right
-Return
+$RButton::Send {%Right_Click_Key%}
 
 ; Map Shift + RMB to something while Mouse Look is active
-$+RButton::
-if (mouselook == 1)
-{
-	Send {%Shift_Right_Click_Key%}
-	Return
-}
-Click down right
-KeyWait, RButton
-Click up right
-Return
+$+RButton::Send {%Shift_Right_Click_Key%}
 
 ; Alt key binds
-;$!LButton::
-;  if (mouselook == 1)
-;  {
-;    Send {%Alt_Left_Click_Key%}
-;    Return
-;  }
-;  Return
-;$!RButton::
-;  if (mouselook == 1)
-;  {
-;    Send {%Alt_Right_Click_Key%}
-;    Return
-;  }
-;  Return
+;$!LButton::Send {%Alt_Left_Click_Key%}
+;$!RButton::Send {%Alt_Right_Click_Key%}
 
-$WheelUp::
-If (mouselook == 1)
-{
-	Send, {%Mouse_Wheel_Up%}
-	Return
-}
-Send, {WheelUp}
-Return
-
-$WheelDown::
-If (mouselook == 1)
-{
-	Send, {%Mouse_Wheel_Down%}
-	Return
-}
-Send, {WheelDown}
-Return
+$WheelUp::Send, {%Mouse_Wheel_Up%}
+$WheelDown::Send, {%Mouse_Wheel_Down%}
 
 ReleaseMlook()
 {
